@@ -38,7 +38,7 @@ resolve_node() {
       ;;
   esac
 
-  local node_file=$(curl --silent --get --retry 5 --retry-max-time 15 $lookup_url -f | grep -oE  '"node-v[0-9]+.[0-9]+.[0-9]+-linux-x64.tar.gz"')
+  local node_file=$(curl --silent --get --retry 5 --retry-max-time 15 $lookup_url -f | grep -oE  '"/dist/v[0-9]+\.[0-9]+\.[0-9]+\/node-v[0-9]+\.[0-9]+\.[0-9]+-linux-x64.tar.gz"')
   if [ "$?" -eq "0" ]; then
     number=$(echo "$node_file" | sed -E 's/.*node-v([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
     url="${base_url}/v${number}/${node_file//\"/}"

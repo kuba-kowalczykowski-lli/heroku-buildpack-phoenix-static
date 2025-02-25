@@ -42,6 +42,9 @@ resolve_node() {
   if [ "$?" -eq "0" ]; then
     number=$(echo "$node_file" | sed -E 's/.*node-v([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
     url="${base_url}/v${number}${node_file//\"/}"
+    echo "Node url is:"
+    echo "${url}"
+    echo "------------"
   else
     fail_bin_install node $node_version;
   fi

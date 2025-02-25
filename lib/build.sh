@@ -23,25 +23,25 @@ load_previous_npm_node_versions() {
 resolve_node() {
   echo "Resolving node version $node_version..."
 
-  local base_url="https://nodejs.org/dist"
+  local base_url="https://nodejs.org"
   local lookup_url=""
 
   case $node_version in
     ""|latest)
-      lookup_url="${base_url}/latest/"
+      lookup_url="${base_url}/dist/latest/"
       ;;
     v*)
-      lookup_url="${base_url}/${node_version}/"
+      lookup_url="${base_url}/dist/${node_version}/"
       ;;
     *)
-      lookup_url="${base_url}/v${node_version}/"
+      lookup_url="${base_url}/dist/v${node_version}/"
       ;;
   esac
 
   local node_file=$(curl --silent --get --retry 5 --retry-max-time 15 $lookup_url -f | grep -oE  '"/dist/v[0-9]+\.[0-9]+\.[0-9]+\/node-v[0-9]+\.[0-9]+\.[0-9]+-linux-x64.tar.gz"')
   if [ "$?" -eq "0" ]; then
     number=$(echo "$node_file" | sed -E 's/.*node-v([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
-    url="${base_url}/v${number}${node_file//\"/}"
+    url="${base_url}${node_file//\"/}"
     echo "Node url is:"
     echo "${url}"
     echo "------------"
